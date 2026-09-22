@@ -59,4 +59,22 @@ export type PendingModal =
   | { kind: "delete-current" }
   | null;
 
+export interface PromptModalProps {
+  title: string;
+  label: string;
+  initialValue?: string;
+  confirmLabel?: string;
+  onCancel: () => void;
+  onSubmit: (value: string) => string | void;
+}
+
+export interface ConfirmModalProps {
+  title: string;
+  description: string;
+  confirmLabel?: string;
+  danger?: boolean;
+  onCancel: () => void;
+  onConfirm: () => void;
+}
+
 export const ROOT_ID = "root";
