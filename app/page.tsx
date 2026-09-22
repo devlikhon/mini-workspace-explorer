@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useWorkspace } from "@/lib/workspaceContext";
 import Sidebar from "@/components/Sidebar";
+import MainPanel from "@/components/MainPanel";
 
 const Home = () => {
   const { hydrated } = useWorkspace();
@@ -19,7 +20,7 @@ const Home = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-canvas">
       <Sidebar />
-      <div>Mini Workspace Explorer</div>
+      <MainPanel />
     </div>
   );
 };

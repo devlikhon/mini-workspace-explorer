@@ -48,4 +48,15 @@ export interface WorkspaceContextValue {
   closeFile: () => void;
 }
 
+export interface FolderViewProps {
+  folderId: string;
+}
+
+export type PendingModal =
+  | { kind: "create"; itemType: ItemType }
+  | { kind: "rename"; item: FSItem }
+  | { kind: "delete"; item: FSItem }
+  | { kind: "delete-current" }
+  | null;
+
 export const ROOT_ID = "root";
