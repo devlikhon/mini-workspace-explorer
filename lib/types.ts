@@ -86,4 +86,13 @@ export interface MainPanelProps {
   onQueryChange: (value: string) => void;
 }
 
+export interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export interface SearchResultsProps {
+  query: string;
+}
+
 export const ROOT_ID = "root";

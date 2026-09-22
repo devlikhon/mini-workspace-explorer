@@ -6,6 +6,7 @@ import Breadcrumb from "./Breadcrumb";
 import FolderView from "./FolderView";
 import FileEditor from "./FileEditor";
 import { MainPanelProps } from "@/lib/types";
+import SearchResults from "./SearchResults";
 
 const MainPanel = ({ query, onQueryChange }: MainPanelProps) => {
   const { state } = useWorkspace();
@@ -14,6 +15,7 @@ const MainPanel = ({ query, onQueryChange }: MainPanelProps) => {
   if (state.openFileId && state.items[state.openFileId]) {
     body = <FileEditor fileId={state.openFileId} />;
   } else if (query.trim()) {
+    body = <SearchResults query={query} />;
   } else {
     body = <FolderView folderId={state.selectedFolderId} />;
   }
