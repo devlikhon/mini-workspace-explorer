@@ -17,4 +17,9 @@ export interface WorkspaceState {
   openFileId: string | null;
 }
 
+export interface NameValidationResult {
+  valid: boolean;
+  error?: string;
+}
+
 export const ROOT_ID = "root";

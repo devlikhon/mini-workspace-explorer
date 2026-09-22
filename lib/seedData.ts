@@ -2,7 +2,7 @@ import { FSItem, ROOT_ID, WorkspaceState } from "./types";
 
 // Builds the example workspace:
 
-const buildSeedState = (): WorkspaceState => {
+export const buildSeedState = (): WorkspaceState => {
   const now = Date.now();
   const item = (partial: Omit<FSItem, "createdAt" | "updatedAt">): FSItem => ({
     ...partial,
@@ -92,5 +92,3 @@ const buildSeedState = (): WorkspaceState => {
     openFileId: null,
   };
 };
-
-export default buildSeedState;

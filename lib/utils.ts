@@ -1,28 +1,31 @@
-import { FSItem, WorkspaceState } from "./types";
+import { FSItem, WorkspaceState, NameValidationResult } from "./types";
 
 // Apply unique id (timestamp + random suffix).
 
-export function makeId(): string {
+export const makeId = (): string => {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
-}
+};
 
 // Direct children of a folder, folders first then files, alphabetical within each group.
 
-export function getChildren(state: WorkspaceState, folderId: string): FSItem[] {
+export const getChildren = (
+  state: WorkspaceState,
+  folderId: string,
+): FSItem[] => {
   return Object.values(state.items)
     .filter((item) => item.parentId === folderId)
     .sort((a, b) => {
       if (a.type !== b.type) return a.type === "folder" ? -1 : 1;
       return a.name.localeCompare(b.name, undefined, { sensitivity: "base" });
     });
-}
+};
 
 // All descendant ids of a folder (not including the folder itself), any depth.
 
-export function getDescendantIds(
+export const getDescendantIds = (
   state: WorkspaceState,
   folderId: string,
-): string[] {
+): string[] => {
   const result: string[] = [];
   const stack = [folderId];
   while (stack.length) {
@@ -35,11 +38,11 @@ export function getDescendantIds(
     }
   }
   return result;
-}
+};
 
 // Path from the root down to `itemId`, inclusive.
 
-export function getPath(state: WorkspaceState, itemId: string): FSItem[] {
+export const getPath = (state: WorkspaceState, itemId: string): FSItem[] => {
   const path: FSItem[] = [];
   let current: FSItem | undefined = state.items[itemId];
   while (current) {
@@ -47,36 +50,31 @@ export function getPath(state: WorkspaceState, itemId: string): FSItem[] {
     current = current.parentId ? state.items[current.parentId] : undefined;
   }
   return path;
-}
+};
 
 // True if `candidateAncestorId` is the same as, or an ancestor of, `itemId`.
 
-export function isSameOrAncestor(
+export const isSameOrAncestor = (
   state: WorkspaceState,
   candidateAncestorId: string,
   itemId: string,
-): boolean {
+): boolean => {
   let current: FSItem | undefined = state.items[itemId];
   while (current) {
     if (current.id === candidateAncestorId) return true;
     current = current.parentId ? state.items[current.parentId] : undefined;
   }
   return false;
-}
-
-export interface NameValidationResult {
-  valid: boolean;
-  error?: string;
-}
+};
 
 // Validates a proposed name for a new or renamed item within `parentId`.
 
-export function validateName(
+export const validateName = (
   state: WorkspaceState,
   parentId: string,
   name: string,
   ignoreId?: string,
-): NameValidationResult {
+): NameValidationResult => {
   const trimmed = name.trim();
   if (!trimmed) return { valid: false, error: "Name cannot be empty." };
   if (trimmed.includes("/") || trimmed.includes("\\")) {
@@ -96,14 +94,14 @@ export function validateName(
     };
   }
   return { valid: true };
-}
+};
 
 // Highlights `query` inside `text` -- returns segments for rendering, case-insensitive.
 
-export function splitByMatch(
+export const splitByMatch = (
   text: string,
   query: string,
-): { text: string; match: boolean }[] {
+): { text: string; match: boolean }[] => {
   if (!query.trim()) return [{ text, match: false }];
   const lower = text.toLowerCase();
   const q = query.toLowerCase();
@@ -120,4 +118,4 @@ export function splitByMatch(
     i = idx + q.length;
   }
   return segments;
-}
+};
