@@ -77,4 +77,13 @@ export interface ConfirmModalProps {
   onConfirm: () => void;
 }
 
+export interface FileEditorProps {
+  fileId: string;
+}
+
+export interface MainPanelProps {
+  query: string;
+  onQueryChange: (value: string) => void;
+}
+
 export const ROOT_ID = "root";

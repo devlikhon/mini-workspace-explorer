@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-canvas">
       <Sidebar />
-      <MainPanel />
+      <MainPanel query={query} onQueryChange={setQuery} />
     </div>
   );
 };
