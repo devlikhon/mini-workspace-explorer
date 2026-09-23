@@ -86,9 +86,15 @@ export interface FileEditorProps {
   fileId: string;
 }
 
+export interface SidebarProps {
+  open: boolean;
+  onClose: () => void;
+}
+
 export interface MainPanelProps {
   query: string;
   onQueryChange: (value: string) => void;
+  onMenuClick: () => void;
 }
 
 export interface SearchBarProps {

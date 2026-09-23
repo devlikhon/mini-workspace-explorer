@@ -8,6 +8,7 @@ import MainPanel from "@/components/MainPanel";
 const Home = () => {
   const { hydrated } = useWorkspace();
   const [query, setQuery] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   if (!hydrated) {
     return (
@@ -19,8 +20,12 @@ const Home = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-canvas">
-      <Sidebar />
-      <MainPanel query={query} onQueryChange={setQuery} />
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <MainPanel
+        query={query}
+        onQueryChange={setQuery}
+        onMenuClick={() => setSidebarOpen((prev) => !prev)}
+      />
     </div>
   );
 };
