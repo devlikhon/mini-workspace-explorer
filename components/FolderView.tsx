@@ -5,11 +5,12 @@ import { useWorkspace } from "@/lib/workspaceContext";
 import { getChildren } from "@/lib/utils";
 import { ConfirmModal, PromptModal } from "./Modal";
 import { FolderViewProps, PendingModal } from "@/lib/types";
+import { useNavigationGuard } from "@/lib/navigationGuard";
 
 const FolderView = ({ folderId }: FolderViewProps) => {
   const { state, createItem, renameItem, deleteItem, selectFolder, openFile } =
     useWorkspace();
-
+  const { requestNavigation } = useNavigationGuard();
   const [modal, setModal] = useState<PendingModal>(null);
 
   const folder = state.items[folderId];
@@ -17,10 +18,6 @@ const FolderView = ({ folderId }: FolderViewProps) => {
   const isRoot = folder?.parentId === null;
 
   const closeModal = () => setModal(null);
-
-  function requestNavigation(arg0: () => void): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <div className="flex h-full flex-col">

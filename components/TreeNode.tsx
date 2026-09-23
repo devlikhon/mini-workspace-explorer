@@ -2,16 +2,13 @@
 
 import React, { useState } from "react";
 import { useWorkspace } from "@/lib/workspaceContext";
+import { useNavigationGuard } from "@/lib/navigationGuard";
 import { getChildren } from "@/lib/utils";
-
-interface TreeNodeProps {
-  id: string;
-  depth: number;
-}
+import { TreeNodeProps } from "@/lib/types";
 
 const TreeNode = ({ id, depth }: TreeNodeProps) => {
   const { state, selectFolder } = useWorkspace();
-
+  const { requestNavigation } = useNavigationGuard();
   const [expanded, setExpanded] = useState(depth === 0);
 
   const item = state.items[id];
@@ -32,7 +29,7 @@ const TreeNode = ({ id, depth }: TreeNodeProps) => {
             : "text-muted hover:bg-panel2 hover:text-white"
         }`}
         style={{ paddingLeft: 8 + depth * 14 }}
-        onClick={() => selectFolder(id)}
+        onClick={() => requestNavigation(() => selectFolder(id))}
       >
         <button
           aria-label={expanded ? "Collapse folder" : "Expand folder"}

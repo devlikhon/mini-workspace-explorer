@@ -48,6 +48,11 @@ export interface WorkspaceContextValue {
   closeFile: () => void;
 }
 
+export interface TreeNodeProps {
+  id: string;
+  depth: number;
+}
+
 export interface FolderViewProps {
   folderId: string;
 }

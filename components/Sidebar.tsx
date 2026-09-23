@@ -8,7 +8,7 @@ const Sidebar = () => {
   const { state } = useWorkspace();
 
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r border-border bg-panel">
+    <aside className="flex h-full w-40 md:w-64 shrink-0 flex-col border-r border-border bg-panel">
       <div className="border-b border-border px-4 py-3">
         <h1 className="text-sm font-semibold text-white">
           Mini Workspace Explorer

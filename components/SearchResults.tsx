@@ -4,9 +4,11 @@ import React, { useMemo } from "react";
 import { useWorkspace } from "@/lib/workspaceContext";
 import { getPath, splitByMatch } from "@/lib/utils";
 import { SearchResultsProps } from "@/lib/types";
+import { useNavigationGuard } from "@/lib/navigationGuard";
 
 const SearchResults = ({ query }: SearchResultsProps) => {
   const { state, selectFolder, openFile } = useWorkspace();
+  const { requestNavigation } = useNavigationGuard();
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -40,10 +42,6 @@ const SearchResults = ({ query }: SearchResultsProps) => {
                 .slice(0, -1)
                 .map((p) => p.name)
                 .join(" / ");
-              function requestNavigation(arg0: () => void): void {
-                throw new Error("Function not implemented.");
-              }
-
               return (
                 <li
                   key={item.id}

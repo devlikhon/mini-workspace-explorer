@@ -7,6 +7,7 @@ import FolderView from "./FolderView";
 import FileEditor from "./FileEditor";
 import { MainPanelProps } from "@/lib/types";
 import SearchResults from "./SearchResults";
+import SearchBar from "./SearchBar";
 
 const MainPanel = ({ query, onQueryChange }: MainPanelProps) => {
   const { state } = useWorkspace();
@@ -24,6 +25,7 @@ const MainPanel = ({ query, onQueryChange }: MainPanelProps) => {
     <main className="flex h-full min-w-0 flex-1 flex-col bg-canvas">
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-3">
         <Breadcrumb />
+        <SearchBar value={query} onChange={onQueryChange} />
       </div>
       <div className="min-h-0 flex-1">{body}</div>
     </main>

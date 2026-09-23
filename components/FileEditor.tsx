@@ -3,21 +3,31 @@
 import React, { useEffect, useState } from "react";
 import { useWorkspace } from "@/lib/workspaceContext";
 import { FileEditorProps } from "@/lib/types";
+import { useNavigationGuard } from "@/lib/navigationGuard";
 
 const FileEditor = ({ fileId }: FileEditorProps) => {
   const { state, updateContent, closeFile } = useWorkspace();
-
+  const { setGuard, requestNavigation } = useNavigationGuard();
   const file = state.items[fileId];
 
   const [draft, setDraft] = useState(file?.content ?? "");
   const dirty = file ? draft !== (file.content ?? "") : false;
 
-  // Reset the draft whenever a *different* file is opened (but not on every
-  // keystroke, and not when this same file's saved content changes under us).
   useEffect(() => {
     setDraft(file?.content ?? "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileId]);
+
+  // Register this editor's unsaved-changes guard while it's mounted.
+  useEffect(() => {
+    setGuard(() => {
+      if (!dirty) return true;
+      return window.confirm(
+        `"${file?.name ?? "This file"}" has unsaved changes. Discard them and continue?`,
+      );
+    });
+    return () => setGuard(null);
+  }, [dirty, file?.name, setGuard]);
 
   // Warn on a hard page refresh/close too, not just in-app navigation.
   useEffect(() => {
@@ -33,17 +43,6 @@ const FileEditor = ({ fileId }: FileEditorProps) => {
   if (!file) return null;
 
   const save = () => updateContent(fileId, draft);
-
-  const requestNavigation = (navigate: () => void) => {
-    if (
-      !dirty ||
-      window.confirm(
-        `"${file.name}" has unsaved changes. Discard them and continue?`,
-      )
-    ) {
-      navigate();
-    }
-  };
 
   return (
     <div className="flex h-full flex-col">
